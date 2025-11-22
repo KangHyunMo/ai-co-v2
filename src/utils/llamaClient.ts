@@ -4,8 +4,6 @@
 // This file does not include a model — it provides detection, init,
 // and a `generateResponse(prompt)` API. Place model files under `public/models/`.
 
-import { generateLocalAIFeedback } from "./localAI"
-
 let initialized = false
 // hasModelFiles: model files are present under public/models/...
 let hasModelFiles = false

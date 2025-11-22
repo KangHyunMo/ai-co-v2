@@ -351,9 +351,10 @@ export function advancedPatternAnalysis(
   // 이상 징후 감지
   const anomalies: string[] = []
   const avgScore = scores.reduce((a, b) => a + b, 0) / scores.length
-  const stdDev = Math.sqrt(
-    scores.reduce((sum, s) => sum + Math.pow(s - avgScore, 2), 0) / scores.length
-  )
+  // 표준편차 계산 (향후 사용 예정)
+  // const stdDev = Math.sqrt(
+  //   scores.reduce((sum, s) => sum + Math.pow(s - avgScore, 2), 0) / scores.length
+  // )
 
   // 급격한 변화 감지
   for (let i = 1; i < scores.length; i++) {

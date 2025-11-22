@@ -3,8 +3,6 @@
 import React from "react"
 import "../styles/StatsCards.css"
 import { EmotionEntry, Goal } from "../types"
-import { format } from "date-fns"
-import { ko } from "date-fns/locale"
 
 interface Props {
   emotions: EmotionEntry[]

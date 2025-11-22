@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react"
 import "./App.css"
 import AIFeedback from "./components/AIFeedback"
-import EmotionTracker from "./components/EmotionTracker"
+import { EmotionTracker } from "./components/EmotionTracker"
 import GoalMonitor from "./components/GoalMonitor"
 import MoodGraph from "./components/MoodGraph"
 import SettingsPanel from "./components/SettingsPanel"

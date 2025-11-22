@@ -1,11 +1,15 @@
 /** @format */
 
 import React, { useState } from "react"
+import { format } from "date-fns"
+import { ko } from "date-fns/locale"
 import "../styles/EmotionTracker.css"
 import { EmotionEntry } from "../types"
 
 interface Props {
   onAddEmotion: (emotion: EmotionEntry) => void
+  emotions: EmotionEntry[]
+  onDeleteEmotion?: (emotionId: string) => void
 }
 
 const emotionOptions = [
@@ -16,11 +20,16 @@ const emotionOptions = [
   { value: "very-happy", label: "매우 행복", emoji: "😄" },
 ]
 
-export const EmotionTracker: React.FC<Props> = ({ onAddEmotion }) => {
+export const EmotionTracker: React.FC<Props> = ({ 
+  onAddEmotion, 
+  emotions = [],
+  onDeleteEmotion 
+}) => {
   const [selectedEmotion, setSelectedEmotion] = useState<string>("neutral")
   const [intensity, setIntensity] = useState(5)
   const [mood, setMood] = useState("")
   const [note, setNote] = useState("")
+  const [historyExpanded, setHistoryExpanded] = useState(false)
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -107,8 +116,67 @@ export const EmotionTracker: React.FC<Props> = ({ onAddEmotion }) => {
           감정 기록하기 ✨
         </button>
       </form>
+
+      {/* 감정 히스토리 */}
+      {emotions.length > 0 && (
+        <div className='emotion-history'>
+          <div className='history-header-section'>
+            <h3>📝 감정 기록 히스토리 ({emotions.length}개)</h3>
+            <button
+              type='button'
+              onClick={() => setHistoryExpanded(!historyExpanded)}
+              className='history-toggle-btn'
+            >
+              {historyExpanded ? '접기 ▲' : '펼치기 ▼'}
+            </button>
+          </div>
+          {historyExpanded && (
+            <div className='history-list'>
+            {emotions
+              .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+              .map((emotion) => {
+                const emotionInfo = emotionOptions.find(
+                  (opt) => opt.value === emotion.emotion
+                )
+                return (
+                  <div key={emotion.id} className='history-item'>
+                    <div className='history-header'>
+                      <div className='history-emoji'>{emotionInfo?.emoji}</div>
+                      <div className='history-info'>
+                        <div className='history-date'>
+                          {format(new Date(emotion.date), "yyyy년 MM월 dd일 HH:mm", {
+                            locale: ko,
+                          })}
+                        </div>
+                        <div className='history-emotion'>
+                          {emotionInfo?.label} (강도: {emotion.intensity}/10)
+                        </div>
+                        {emotion.mood && (
+                          <div className='history-mood'>기분: {emotion.mood}</div>
+                        )}
+                        {emotion.note && (
+                          <div className='history-note'>{emotion.note}</div>
+                        )}
+                      </div>
+                    </div>
+                    {onDeleteEmotion && (
+                      <button
+                        onClick={() => onDeleteEmotion(emotion.id)}
+                        className='btn-delete-emotion'
+                        title='기록 삭제'
+                      >
+                        🗑️
+                      </button>
+                    )}
+                  </div>
+                )
+              })}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
 
-export default EmotionTracker
+// export default EmotionTracker

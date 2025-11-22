@@ -72,11 +72,7 @@ export async function saveToIndexedDB<T extends { id: string }>(
           completed++
           if (completed === total) {
             // 모든 항목이 저장되면 완료
-            setTimeout(() => {
-              if (transaction.readyState === 'active' || transaction.readyState === 'inactive') {
-                resolve()
-              }
-            }, 0)
+            resolve()
           }
         }
 
