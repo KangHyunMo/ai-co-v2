@@ -1,9 +1,8 @@
-{
-  "compilerOptions": {
-    "useDefineForClassFields": true,
-    "lib": ["ES2020", "DOM", "DOM.Iterable"],
-    "type": "module"
-  },
-  "include": ["vite.config.ts"],
-  "exclude": ["node_modules"]
+/** @format */
+
+/// <reference types="vite/client" />
+
+declare module '*.css' {
+  const content: Record<string, string>
+  export default content
 }

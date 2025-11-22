@@ -4,7 +4,7 @@
 export interface EmotionEntry {
   id: string
   date: Date
-  emotion: "very-sad" | "sad" | "neutral" | "happy" | "very-happy"
+  emotion: "very-sad" | "sad" | "neutral" | "happy" | "very-happy" | "angry"
   intensity: number // 1-10
   mood: string // 사용자가 입력한 기분 설명
   note: string // 추가 노트

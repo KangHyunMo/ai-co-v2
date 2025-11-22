@@ -2,12 +2,19 @@
 
 .ai-feedback {
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  padding: 1.5rem;
-  border-radius: 12px;
+  padding: 2rem;
+  border-radius: 20px;
   color: white;
   margin-bottom: 1rem;
   max-height: 600px;
   overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.ai-feedback:hover {
+  box-shadow: 0 15px 50px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
 }
 
 .ai-feedback h2 {
@@ -25,9 +32,16 @@
 .feedback-card {
   background: rgba(255, 255, 255, 0.1);
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 16px;
   margin-bottom: 1.5rem;
   border-left: 4px solid white;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.feedback-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateX(4px);
 }
 
 .feedback-message {
@@ -64,8 +78,16 @@
 .analysis-card {
   background: rgba(255, 255, 255, 0.1);
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.analysis-card:hover {
+  background: rgba(255, 255, 255, 0.15);
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
 }
 
 .analysis-card h3 {

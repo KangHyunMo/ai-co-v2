@@ -36,6 +36,7 @@ const StatsCards: React.FC<Props> = ({ emotions, goals }) => {
       neutral: 3,
       happy: 4,
       "very-happy": 5,
+      angry: 2,
     }
     const total = emotions.reduce(
       (sum, e) => sum + (scores[e.emotion] || 3),
@@ -64,7 +65,7 @@ const StatsCards: React.FC<Props> = ({ emotions, goals }) => {
             recent.reduce(
               (sum, e) =>
                 sum +
-                ({ "very-sad": 1, sad: 2, neutral: 3, happy: 4, "very-happy": 5 }[
+                ({ "very-sad": 1, sad: 2, neutral: 3, happy: 4, "very-happy": 5, angry: 2 }[
                   e.emotion
                 ] || 3),
               0
@@ -73,7 +74,7 @@ const StatsCards: React.FC<Props> = ({ emotions, goals }) => {
             older.reduce(
               (sum, e) =>
                 sum +
-                ({ "very-sad": 1, sad: 2, neutral: 3, happy: 4, "very-happy": 5 }[
+                ({ "very-sad": 1, sad: 2, neutral: 3, happy: 4, "very-happy": 5, angry: 2 }[
                   e.emotion
                 ] || 3),
               0

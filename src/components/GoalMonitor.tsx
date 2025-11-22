@@ -1,8 +1,8 @@
 /** @format */
 
-import React, { useState } from "react"
-import "../styles/GoalMonitor.css"
-import { Goal } from "../types"
+import React, { useState } from 'react'
+import '../styles/GoalMonitor.css'
+import { Goal } from '../types'
 
 interface Props {
   goals: Goal[]
@@ -18,10 +18,16 @@ export const GoalMonitor: React.FC<Props> = ({
   onDeleteGoal,
 }) => {
   const [showForm, setShowForm] = useState(false)
-  const [title, setTitle] = useState("")
-  const [description, setDescription] = useState("")
-  const [category, setCategory] = useState<Goal["category"]>("personal")
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+  const [category, setCategory] = useState<Goal['category']>('personal')
   const [daysToComplete, setDaysToComplete] = useState(30)
+
+  const [editingId, setEditingId] = useState<string | null>(null)
+  const [editTitle, setEditTitle] = useState('')
+  const [editDescription, setEditDescription] = useState('')
+  const [editCategory, setEditCategory] = useState<Goal['category']>('personal')
+  const [editDaysToComplete, setEditDaysToComplete] = useState(30)
 
   const handleAddGoal = (e: React.FormEvent) => {
     e.preventDefault()
@@ -36,25 +42,57 @@ export const GoalMonitor: React.FC<Props> = ({
       targetDate,
       progress: 0,
       category,
-      status: "active",
+      status: 'active',
       createdAt: new Date(),
     }
 
     onAddGoal(goal)
-    setTitle("")
-    setDescription("")
-    setCategory("personal")
+    setTitle('')
+    setDescription('')
+    setCategory('personal')
     setDaysToComplete(30)
     setShowForm(false)
-    alert("목표가 등록되었습니다! 💪")
+    alert('목표가 등록되었습니다! 💪')
   }
 
   const handleProgressChange = (goal: Goal, newProgress: number) => {
     onUpdateGoal({
       ...goal,
       progress: Math.min(100, newProgress),
-      status: newProgress >= 100 ? "completed" : "active",
+      status: newProgress >= 100 ? 'completed' : 'active',
     })
+  }
+
+  const startEdit = (goal: Goal) => {
+    setEditingId(goal.id)
+    setEditTitle(goal.title)
+    setEditDescription(goal.description)
+    setEditCategory(goal.category)
+    // 목표일로부터 남은 일수 계산
+    const today = new Date()
+    const diff = goal.targetDate.getTime() - today.getTime()
+    const daysLeft = Math.ceil(diff / (1000 * 60 * 60 * 24))
+    setEditDaysToComplete(daysLeft > 0 ? daysLeft : 30)
+  }
+
+  const cancelEdit = () => {
+    setEditingId(null)
+  }
+
+  const saveEdit = (goal: Goal) => {
+    const targetDate = new Date()
+    targetDate.setDate(targetDate.getDate() + editDaysToComplete)
+
+    const updated: Goal = {
+      ...goal,
+      title: editTitle,
+      description: editDescription,
+      category: editCategory,
+      targetDate,
+    }
+
+    onUpdateGoal(updated)
+    setEditingId(null)
   }
 
   const daysLeft = (goal: Goal) => {
@@ -91,7 +129,7 @@ export const GoalMonitor: React.FC<Props> = ({
 
           <select
             value={category}
-            onChange={(e) => setCategory(e.target.value as Goal["category"])}
+            onChange={(e) => setCategory(e.target.value as Goal['category'])}
           >
             <option value='health'>건강</option>
             <option value='work'>업무</option>
@@ -104,16 +142,88 @@ export const GoalMonitor: React.FC<Props> = ({
             <label>완료 기간 (일)</label>
             <input
               type='number'
-              value={daysToComplete}
-              onChange={(e) => setDaysToComplete(Number(e.target.value))}
+              value={daysToComplete === 0 ? '' : daysToComplete}
+              onChange={(e) => {
+                const val = e.target.value
+                if (val === '') setDaysToComplete(0)
+                else setDaysToComplete(Number(val))
+              }}
               min='1'
               max='365'
+              inputMode='numeric'
+              pattern='[0-9]*'
             />
           </div>
 
           <button type='submit' className='submit-btn'>
             목표 등록하기
           </button>
+        </form>
+      )}
+
+      {editingId && (
+        <form
+          className='goal-form'
+          onSubmit={(e) => {
+            e.preventDefault()
+            const goal = goals.find((g) => g.id === editingId)
+            if (goal) saveEdit(goal)
+          }}
+        >
+          <input
+            type='text'
+            value={editTitle}
+            onChange={(e) => setEditTitle(e.target.value)}
+            placeholder='목표 제목'
+            required
+          />
+
+          <textarea
+            value={editDescription}
+            onChange={(e) => setEditDescription(e.target.value)}
+            placeholder='목표 설명'
+            rows={3}
+            required
+          />
+
+          <select
+            value={editCategory}
+            onChange={(e) =>
+              setEditCategory(e.target.value as Goal['category'])
+            }
+          >
+            <option value='health'>건강</option>
+            <option value='work'>업무</option>
+            <option value='personal'>개인</option>
+            <option value='relationship'>관계</option>
+            <option value='learning'>학습</option>
+          </select>
+
+          <div className='days-input'>
+            <label>완료 기간 (일)</label>
+            <input
+              type='number'
+              value={editDaysToComplete === 0 ? '' : editDaysToComplete}
+              onChange={(e) => {
+                const val = e.target.value
+                if (val === '') setEditDaysToComplete(0)
+                else setEditDaysToComplete(Number(val))
+              }}
+              min='1'
+              max='365'
+              inputMode='numeric'
+              pattern='[0-9]*'
+            />
+          </div>
+
+          <div className='form-actions'>
+            <button type='submit' className='submit-btn'>
+              저장
+            </button>
+            <button type='button' onClick={cancelEdit} className='cancel-btn'>
+              취소
+            </button>
+          </div>
         </form>
       )}
 
@@ -128,11 +238,11 @@ export const GoalMonitor: React.FC<Props> = ({
               <div className='goal-header'>
                 <h3>{goal.title}</h3>
                 <span className={`category-badge ${goal.category}`}>
-                  {goal.category === "health" && "건강"}
-                  {goal.category === "work" && "업무"}
-                  {goal.category === "personal" && "개인"}
-                  {goal.category === "relationship" && "관계"}
-                  {goal.category === "learning" && "학습"}
+                  {goal.category === 'health' && '건강'}
+                  {goal.category === 'work' && '업무'}
+                  {goal.category === 'personal' && '개인'}
+                  {goal.category === 'relationship' && '관계'}
+                  {goal.category === 'learning' && '학습'}
                 </span>
               </div>
 
@@ -170,19 +280,30 @@ export const GoalMonitor: React.FC<Props> = ({
 
               <div className='goal-footer'>
                 <span className='days-left'>
-                  남은 일수: {daysLeft(goal) > 0 ? daysLeft(goal) : "완료!"}
+                  남은 일수: {daysLeft(goal) > 0 ? daysLeft(goal) : '완료!'}
                 </span>
                 <div className='goal-actions'>
                   {goal.progress >= 100 && (
                     <span className='completion-badge'>✅ 완료!</span>
                   )}
-                  <button
-                    onClick={() => onDeleteGoal(goal.id)}
-                    className='btn-delete'
-                    title='목표 삭제'
-                  >
-                    🗑️
-                  </button>
+                  {editingId !== goal.id && (
+                    <>
+                      <button
+                        onClick={() => startEdit(goal)}
+                        className='btn-edit'
+                        title='목표 수정'
+                      >
+                        ✏️
+                      </button>
+                      <button
+                        onClick={() => onDeleteGoal(goal.id)}
+                        className='btn-delete'
+                        title='목표 삭제'
+                      >
+                        🗑️
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </div>

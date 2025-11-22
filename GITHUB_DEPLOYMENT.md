@@ -1,8 +1,11 @@
+<!-- @format -->
+
 # 🚀 GitHub 자동 배포 가이드
 
 ## 📋 개요
 
 이 프로젝트는 GitHub Actions를 사용하여 자동으로 배포됩니다:
+
 - **GitHub Pages**: 웹 앱 자동 배포
 - **Android APK**: Android 앱 빌드 및 배포
 
@@ -16,16 +19,19 @@
 2. **Settings** → **Pages** 메뉴 클릭
 3. **Source**에서 **GitHub Actions** 선택
 4. 저장
+   `
 
 ### 2. 리포지토리 이름 확인
 
 리포지토리 이름에 따라 base path가 자동으로 설정됩니다:
+
 - 리포지토리 이름: `ai-co-v2` → base path: `/ai-co-v2/`
 - 루트 도메인 사용 시: `/`
 
 ### 3. 자동 배포 트리거
 
 다음 경우에 자동으로 배포됩니다:
+
 - `main` 또는 `master` 브랜치에 push
 - 수동 실행 (Actions 탭에서)
 
@@ -40,6 +46,7 @@
 ```
 
 **동작:**
+
 1. 코드 체크아웃
 2. Node.js 설정
 3. 의존성 설치
@@ -48,6 +55,7 @@
 6. GitHub Pages에 배포
 
 **배포 URL:**
+
 ```
 https://[사용자명].github.io/[리포지토리명]/
 ```
@@ -59,6 +67,7 @@ https://[사용자명].github.io/[리포지토리명]/
 ```
 
 **동작:**
+
 1. 코드 체크아웃
 2. Node.js 및 Java 설정
 3. 웹 앱 빌드
@@ -68,6 +77,7 @@ https://[사용자명].github.io/[리포지토리명]/
 7. Artifact로 업로드
 
 **APK 다운로드:**
+
 - Actions 탭 → 최신 워크플로우 실행 → Artifacts
 
 ---
@@ -75,9 +85,11 @@ https://[사용자명].github.io/[리포지토리명]/
 ## 🐛 404 오류 해결
 
 ### 문제
+
 GitHub Pages에서 SPA 라우팅 시 404 오류 발생
 
 ### 해결
+
 1. **404.html 파일 생성**: `dist/404.html`이 `index.html`의 복사본으로 생성됨
 2. **자동 리다이렉트**: 404 페이지에서 자동으로 index.html로 리다이렉트
 3. **Base path 설정**: Vite 설정에서 자동으로 base path 설정
@@ -120,10 +132,12 @@ npm run preview
 ### 배포가 안 될 때
 
 1. **Actions 탭 확인**
+
    - 워크플로우 실행 상태 확인
    - 에러 메시지 확인
 
 2. **Pages 설정 확인**
+
    - Settings → Pages
    - Source가 "GitHub Actions"로 설정되어 있는지 확인
 
@@ -134,11 +148,13 @@ npm run preview
 ### 404 오류가 계속 발생할 때
 
 1. **404.html 파일 확인**
+
    ```bash
    ls dist/404.html
    ```
 
 2. **Base path 확인**
+
    - 브라우저 개발자 도구 → Network 탭
    - 리소스 경로 확인
 
@@ -212,4 +228,3 @@ export default defineConfig({
 ---
 
 **Made with ❤️ by Mogle**
-

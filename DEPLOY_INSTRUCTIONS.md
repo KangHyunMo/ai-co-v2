@@ -1,3 +1,5 @@
+<!-- @format -->
+
 # GitHub Pages 배포 가이드
 
 ## 설정 완료 사항
@@ -9,12 +11,13 @@
 ## 다음 단계
 
 ### 1. GitHub 저장소 생성
+
 GitHub에서 `ai-co-v2` 이름으로 새 저장소를 생성하세요.
 
 ### 2. 원격 저장소 추가 및 푸시
 
 ```bash
-git remote add origin https://github.com/YOUR_USERNAME/ai-co-v2.git
+git remote add origin https://github.com/KangHyunMo/ai-co-v2.git
 git branch -M main
 git push -u origin main
 ```
@@ -47,4 +50,3 @@ git push
 ```
 
 하지만 권장하는 방법은 GitHub Actions를 사용하는 것입니다.
-

@@ -2,12 +2,19 @@
 
 .mood-graph {
   background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-  padding: 1.5rem;
-  border-radius: 12px;
+  padding: 2rem;
+  border-radius: 20px;
   color: #333;
   margin-bottom: 1rem;
   max-height: 600px;
   overflow-y: auto;
+  box-shadow: 0 10px 40px rgba(168, 237, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.mood-graph:hover {
+  box-shadow: 0 15px 50px rgba(168, 237, 234, 0.4);
+  transform: translateY(-2px);
 }
 
 .mood-graph h2 {
@@ -27,9 +34,15 @@
 .stat-card {
   background: white;
   padding: 1.5rem;
-  border-radius: 8px;
+  border-radius: 16px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .stat-label {
@@ -49,10 +62,15 @@
 
 .chart-container {
   background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.chart-container:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .chart-container .recharts-wrapper {
@@ -80,9 +98,14 @@
 
 .emotion-distribution {
   background: white;
-  padding: 1rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.emotion-distribution:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .emotion-distribution h3 {

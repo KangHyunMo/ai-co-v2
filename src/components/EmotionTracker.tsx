@@ -18,6 +18,7 @@ const emotionOptions = [
   { value: "neutral", label: "보통", emoji: "😐" },
   { value: "happy", label: "행복", emoji: "😊" },
   { value: "very-happy", label: "매우 행복", emoji: "😄" },
+  { value: "angry", label: "화남", emoji: "😠" },
 ]
 
 export const EmotionTracker: React.FC<Props> = ({ 
